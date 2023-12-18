@@ -1,0 +1,15 @@
+[Unit]
+Description=Comet Companies API (comet)
+
+[Service]
+WorkingDirectory=/var/www/api
+ExecStart=dotnet 6GT-Companies.API.dll
+Restart=always
+# Restart service after 10 seconds if the dotnet service crashes
+RestartSec=10
+SyslogIdentifier=companiesapi
+User=vagrant
+Environment=ASPNETCORE_ENVIRONMENT=TkxelDev
+
+[Install]
+WantedBy=multi-user.target
