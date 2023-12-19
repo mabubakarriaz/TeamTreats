@@ -1,10 +1,16 @@
-# TeamTreats
+# Team Treats
 
-A web app to maintain the team's recreational fund.
+A web app to maintain the team's recreational fund (TRF)
 
-## Technology
+## Technologies
 
-- ASP.Net Core Web App
+`ASP.Net Core`, `Vagrant`, `Packer`, `Ansible`
+
+## Outline
+
+- Running the app with Docker Build
+- Running the app with Docker Compose
+- Running the App with Vagrant
 
 ## Running the app with Docker Build
 
@@ -14,7 +20,7 @@ This document provides a step-by-step guide on building a Docker image for the T
 
 Before proceeding, make sure you have the following:
 
-- Docker installed on your machine
+- [Docker](https://www.docker.com/products/docker-desktop/)
 - GitHub Personal Access Token with appropriate permissions
 
 ### Steps
@@ -73,7 +79,10 @@ This guide provides instructions on running the TeamTreats web app using Docker 
 
 ### Prerequisites
 
-Before proceeding, ensure that Docker and Docker Compose are installed on your machine.
+Before proceeding, ensure that these are installed on your machine.
+
+- [Docker](https://www.docker.com/products/docker-desktop/)
+- Docker Compose
 
 To run the TeamTreats web app, follow these steps:
 
@@ -89,9 +98,7 @@ To run the TeamTreats web app, follow these steps:
 
 3. Access the TeamTreats web app by navigating to the specified URL or IP address in your web browser.
 
-### Stopping and Cleaning Up
-
-To stop and remove the containers associated with the TeamTreats web app, use the following command:
+4. To stop and remove the containers associated with the TeamTreats web app, use the following command:
 
    ```powershell
    docker-compose down
