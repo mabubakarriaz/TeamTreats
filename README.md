@@ -6,6 +6,67 @@ A web app to maintain the team's recreational fund.
 
 - ASP.Net Core Web App
 
+## Running the app with Docker Build
+
+This document provides a step-by-step guide on building a Docker image for the TeamTreats web application, running a Docker container, and pushing the image to GitHub Packages.
+
+### Prerequisites
+
+Before proceeding, make sure you have the following:
+
+- Docker installed on your machine
+- GitHub Personal Access Token with appropriate permissions
+
+### Steps
+
+1. **Login to GitHub Packages (Optional):**  
+   Use the following command to log in to GitHub Packages using your GitHub username and Personal Access Token.
+
+   ```powershell
+   echo $ENV:TeamTreats_GH_TOKEN | docker login ghcr.io -u mabubakarriaz --password-stdin
+   ```
+
+2. **Build Docker Image:**  
+   Run the following command to build the Docker image for the TeamTreats web application. You can use any tag `-t teamtreats:latest` if you do not want to publish it to GitHub.
+
+   ```powershell
+   docker build -t ghcr.io/mabubakarriaz/teamtreats:latest -f .\teamtreats-webapp\Dockerfile .
+   ```
+
+3. **Push Docker Image to GitHub Packages (Optional):**  
+   Push the built Docker image to GitHub Packages using the following command.
+
+   ```powershell
+   docker push ghcr.io/mabubakarriaz/teamtreats:v0.0.1-alpha
+   ```
+
+4. **Pull Docker Image (Optional):**  
+   If needed, pull the Docker image from GitHub Packages using the following command.
+
+   ```powershell
+   docker pull ghcr.io/mabubakarriaz/teamtreats:v0.0.1-alpha
+   ```
+
+5. **Run Docker Container:**  
+   Start a Docker container for the TeamTreats web application using the following command. Use your own tag `teamtreats:latest` if building local image.
+
+   ```powershell
+   docker run --name teamtreats_webapp --restart always -d -p 8080:80 -e ASPNETCORE_ENVIRONMENT=Development ghcr.io/mabubakarriaz/teamtreats:v0.0.1-alpha
+   ```
+
+6. **Access TeamTreats Web Application:**  
+   Once the container is running, access the TeamTreats web application by navigating to `http://localhost:8080` in your web browser.
+
+### Notes
+
+- This example uses the image tagging convention for GitHub Publish. You can use your own tag name if this is not required.
+- Ensure that your GitHub Personal Access Token has the necessary permissions to read and write packages.
+- Modify the version tag (`v0.0.1-alpha`) according to your versioning strategy.
+- Adjust the container port (`-p 8080:80`) based on your desired host and container port configuration.
+- Review and update the Dockerfile path (`.\teamtreats-webapp\Dockerfile`) if it's located in a different directory.
+
+Congratulations! You have successfully built, deployed, and run the TeamTreats web application using Docker and GitHub Packages.
+
 ## Running the app with Docker Compose
 
 This guide provides instructions on running the TeamTreats web app using Docker Compose.
@@ -35,7 +96,6 @@ To stop and remove the containers associated with the TeamTreats web app, use th
    ```powershell
    docker-compose down
    ```
-
 
 ## Running the App with Vagrant
 
