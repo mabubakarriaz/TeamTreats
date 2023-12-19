@@ -34,7 +34,7 @@ Before proceeding, make sure you have the following:
    ```
 
 3. **Push Docker Image to GitHub Packages (Optional):**  
-   Push the built Docker image to GitHub Packages using the following command.
+   Push the built Docker image to GitHub Packages using the following command.s
 
    ```powershell
    docker push ghcr.io/mabubakarriaz/teamtreats:v0.0.1-alpha
@@ -174,4 +174,3 @@ Before diving into Vagrant, ensure the following dependencies are installed:
   ```powershell
   vagrant port
   ```
-
