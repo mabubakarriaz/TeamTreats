@@ -1,0 +1,15 @@
+[Unit]
+Description=Team Treats webapp (comet)
+
+[Service]
+WorkingDirectory=/var/www/app
+ExecStart=dotnet teamtreats-webapp.dll
+Restart=always
+# Restart service after 10 seconds if the dotnet service crashes
+RestartSec=10
+SyslogIdentifier=teamtreatsapp
+User=vagrant
+Environment=ASPNETCORE_ENVIRONMENT=Development
+
+[Install]
+WantedBy=multi-user.target
