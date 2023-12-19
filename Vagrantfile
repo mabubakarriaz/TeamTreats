@@ -2,10 +2,14 @@
 # vi: set ft=ruby :
 # https://docs.vagrantup.com.
 
+# Using environment variables or provide default values
+box_name = ENV['VAGRANT_BOX'] || "ubuntu/jammy64"
+custom_port = ENV['VAGRANT_PORT'] || 8081
+
 Vagrant.configure("2") do |config|
 
   # search boxes at https://vagrantcloud.com/search.
-  config.vm.box = "ubuntu/jammy64" 
+  config.vm.box = box_name
   config.vm.box_check_update = false # if having issues you can remove this line to auto update to latest box version or run `vagrant box outdated`.
 
   # virtual machine specific configurations
@@ -14,7 +18,7 @@ Vagrant.configure("2") do |config|
     # network settings
     app.vm.hostname = "comet.local" # entry added in /etc/hosts file with private IP
     app.vm.network "private_network", ip: "192.168.200.10", hostname: true
-    app.vm.network "forwarded_port", guest: 80, host: 8081, host_ip: "127.0.0.1", protocol: "tcp", auto_correct: true, id: "app_port_rule"
+    app.vm.network "forwarded_port", guest: 80, host: custom_port, host_ip: "127.0.0.1", protocol: "tcp", auto_correct: true, id: "app_port_rule"
     
     # app code build sync
     app.vm.synced_folder "src/teamtreats-webapp/bin/publish", "/var/www/app", create: true, group: "vagrant", owner: "vagrant", id: "app_mount_folder" # disabled: true # if you want live sync to be turned off
