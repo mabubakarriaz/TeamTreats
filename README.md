@@ -31,7 +31,7 @@ Before diving into Vagrant, ensure the following dependencies are installed:
    Publish project files using the following command:
 
    ```powershell
-   dotnet publish ./src/6GT-Companies.API/6GT-Companies.API.csproj -p:PublishDir=.\bin/Publish -c Release -r linux-x64 --self-contained true
+   dotnet publish ./src/teamtreats-webapp/teamtreats-webapp.csproj -p:PublishDir=.\bin/Publish -c Release -r linux-x64 --self-contained true
    ```
 
 3. **Create and Run Virtual Machine:**

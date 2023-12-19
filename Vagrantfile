@@ -9,32 +9,32 @@ Vagrant.configure("2") do |config|
   config.vm.box_check_update = false # if having issues you can remove this line to auto update to latest box version or run `vagrant box outdated`.
 
   # virtual machine specific configurations
-  config.vm.define "api", primary: true do |api|
+  config.vm.define "app", primary: true do |app|
 
     # network settings
-    api.vm.hostname = "comet.local" # entry added in /etc/hosts file with private IP
-    api.vm.network "private_network", ip: "192.168.200.10", hostname: true
-    api.vm.network "forwarded_port", guest: 80, host: 8086, host_ip: "127.0.0.1", protocol: "tcp", auto_correct: true, id: "api_port_rule"
+    app.vm.hostname = "comet.local" # entry added in /etc/hosts file with private IP
+    app.vm.network "private_network", ip: "192.168.200.10", hostname: true
+    app.vm.network "forwarded_port", guest: 80, host: 8081, host_ip: "127.0.0.1", protocol: "tcp", auto_correct: true, id: "app_port_rule"
     
-    # api code build sync
-    api.vm.synced_folder "src/6GT-Companies.API/bin/publish", "/var/www/api", create: true, group: "vagrant", owner: "vagrant", id: "api_mount_folder" # disabled: true # if you want live sync to be turned off
+    # app code build sync
+    app.vm.synced_folder "src/teamtreats-webapp/bin/publish", "/var/www/app", create: true, group: "vagrant", owner: "vagrant", id: "app_mount_folder" # disabled: true # if you want live sync to be turned off
   
     # pre provision script
-    api.vm.provision "shell", path: "configs/pre.sh"
+    app.vm.provision "shell", path: "configs/pre.sh"
 
     # desired state configuration using ansible local
-    api.vm.provision "ansible_local" do |al|
+    app.vm.provision "ansible_local" do |al|
       al.playbook = "configs/playbook.yml"
       al.become = true
       al.become_user = "root"
     end
 
     # add config files
-    api.vm.provision "file", source: "configs/nginx.conf", destination: "/tmp/nginx.conf"
-    api.vm.provision "file", source: "configs/api.service", destination: "/tmp/api.service"
+    app.vm.provision "file", source: "configs/nginx.conf", destination: "/tmp/nginx.conf"
+    app.vm.provision "file", source: "configs/app.service", destination: "/tmp/app.service"
     
     # post provision script
-    api.vm.provision "shell", path: "configs/post.sh"
+    app.vm.provision "shell", path: "configs/post.sh"
 
   end 
 
