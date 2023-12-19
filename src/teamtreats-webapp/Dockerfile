@@ -5,6 +5,11 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
+# Add labels here
+LABEL org.opencontainers.image.source=https://github.com/mabubakarriaz/teamtreats
+LABEL org.opencontainers.image.description="A web app to maintain the team's recreational fund."
+LABEL org.opencontainers.image.licenses=Apache
+
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["teamtreats-webapp/teamtreats-webapp.csproj", "teamtreats-webapp/"]
