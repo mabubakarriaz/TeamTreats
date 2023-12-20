@@ -2,11 +2,12 @@
   "builders": [
     {
       "boot_command": [
-        "<wait10><wait10><wait10>",
+        "<wait10>",
         "root<enter><wait>",
         "ifconfig eth0 up \u0026\u0026 udhcpc -i eth0<enter><wait5>",
         "wget http://{{ .HTTPIP }}:{{ .HTTPPort }}/answers<enter><wait>",
-        "setup-alpine -f answers<enter>",
+        "setup-alpine -f $PWD/answers<enter>",
+        "<wait10><wait10><wait10>",
         "<wait10><wait10><wait10>",
         "<wait10><wait10><wait10>",
         "<wait10><wait10><wait10>",

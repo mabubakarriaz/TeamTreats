@@ -1,12 +1,13 @@
-build:
+packer:
 	packer build alpine-iso-install.json
 
-add-box:
+box:
 	vagrant box add alpine-clean-3.6.1 out/alpine-clean-3.6.1.box
 
-run-vagrant:
+vagrant:
 	cd apline-vagrant
 	vagrant init alpine-clean-3.6.1
+	vagrant up
 
 clean:
 	rm -rf output-virtualbox-iso
