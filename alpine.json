@@ -1,0 +1,113 @@
+{
+    "builders": [
+      {
+        "boot_command": [
+          "root<enter><wait>",
+          "ifconfig eth0 up && udhcpc -i eth0<enter><wait5>",
+          "wget http://{{ .HTTPIP }}:{{ .HTTPPort }}/answers<enter><wait>",
+          "export ERASE_DISKS=/dev/sda<enter>",
+          "export USEROPTS='-a -u -g audio,video,netdev {{user `ssh_username`}}'<enter>",
+          "export USERSSHKEY='http://{{ .HTTPIP }}:{{ .HTTPPort }}/ssh.keys'<enter>",
+          "setup-alpine -f $PWD/answers<enter><wait5>",
+          "{{user `root_password`}}<enter><wait>",
+          "{{user `root_password`}}<enter><wait30>",
+          "mount /dev/sda3 /mnt<enter>",
+          "echo 'PermitRootLogin yes' >> /mnt/etc/ssh/sshd_config<enter>",
+          "umount /mnt; reboot<enter>"
+        ],
+        "boot_wait": "10s",
+        "communicator": "ssh",
+        "disk_size": "{{user `disk_size`}}",
+        "format": "ova",
+        "guest_additions_mode": "disable",
+        "guest_os_type": "Linux26_64",
+        "headless": false,
+        "http_directory": "http",
+        "iso_checksum": "{{user `iso_checksum_type`}}:{{user `iso_checksum`}}",
+        "iso_urls": [
+          "{{user `iso_local_url`}}",
+          "{{user `iso_download_url`}}"
+        ],
+        "keep_registered": "false",
+        "shutdown_command": "/sbin/poweroff",
+        "ssh_password": "{{user `root_password`}}",
+        "ssh_timeout": "10m",
+        "ssh_username": "root",
+        "type": "virtualbox-iso",
+        "vboxmanage": [
+          [
+            "modifyvm",
+            "{{.Name}}",
+            "--memory",
+            "{{user `memory`}}"
+          ],
+          [
+            "modifyvm",
+            "{{.Name}}",
+            "--cpus",
+            "{{user `cpus`}}"
+          ],
+          [
+            "modifyvm",
+            "{{.Name}}",
+            "--rtcuseutc",
+            "on"
+          ],
+          [
+            "modifyvm",
+            "{{.Name}}",
+            "--graphicscontroller",
+            "vmsvga"
+          ],
+          [
+            "modifyvm",
+            "{{.Name}}",
+            "--vram",
+            "9"
+          ],
+          [
+            "modifyvm",
+            "{{.Name}}",
+            "--vrde",
+            "off"
+          ]
+        ],
+        "vm_name": "{{user `vm_name`}}"
+      }
+    ],
+    "description": "Build base Alpine Linux x86_64",
+    "provisioners": [
+      {
+        "inline": [
+          "echo {{user `community_repo`}} >> /etc/apk/repositories",
+          "apk update",
+          "apk upgrade",
+          "apk add virtualbox-guest-additions",
+          "apk add sudo",
+          "echo '127.0.0.1       alpine alpine.localdomain' >> /etc/hosts",
+          "user={{user `ssh_username`}}",
+          "echo Add user $user with NOPASSWD sudo",
+          "echo $user 'ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers.d/$user",
+          "chmod 0440 /etc/sudoers.d/$user",
+          "echo '{{user `ssh_username`}}:{{user `ssh_password`}}' | chpasswd",
+          "echo disable ssh root login",
+          "sed '/PermitRootLogin yes/d' -i /etc/ssh/sshd_config"
+        ],
+        "type": "shell"
+      }
+    ],
+    "variables": {
+      "community_repo": "http://dl-cdn.alpinelinux.org/alpine/v3.16/community",
+      "cpus": "1",
+      "disk_size": "10240",
+      "iso_checksum": "6c7cb998ec2c8925d5a1239410a4d224b771203f916a18f8015f31169dd767a2",
+      "iso_checksum_type": "sha256",
+      "iso_download_url": "https://dl-cdn.alpinelinux.org/alpine/v3.16/releases/x86_64/alpine-virt-3.16.2-x86_64.iso",
+      "iso_local_url": "../../iso/alpine-virt-3.16.2-x86_64.iso",
+      "memory": "1024",
+      "root_password": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_username": "vagrant",
+      "vm_name": "alpine-3.16.2-x86_64"
+    }
+  }

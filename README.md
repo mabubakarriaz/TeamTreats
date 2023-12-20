@@ -181,3 +181,9 @@ Before diving into Vagrant, ensure the following dependencies are installed:
   ```powershell
   vagrant port
   ```
+
+## Running the app using Packer
+
+packer plugins install github.com/hashicorp/virtualbox
+packer plugins install github.com/hashicorp/vagrant
+
