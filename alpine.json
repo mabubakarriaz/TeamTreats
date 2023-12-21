@@ -46,16 +46,29 @@
       "headless": "false",
       "iso_checksum": "sha256:{{user `iso_checksum`}}",
       "iso_url": "{{user `iso_file`}}",
+      "communicator": "ssh",
+      "ssh_username": "root",
       "ssh_password": "{{user `ssh_password`}}",
       "ssh_timeout": "{{user `ssh_wait_timeout`}}",
-      "ssh_username": "root",
       "disk_size": "{{user `disk_size`}}",
       "hard_drive_interface": "sata",
       "cpus":"{{user `cpus`}}",
-      "memory":"{{user `memory`}}"
+      "memory":"{{user `memory`}}",
+      "vboxmanage": [
+        ["modifyvm", "{{.Name}}", "--macaddress1", "aa33dd44bbdd"]
+      ]
     }
   ],
-  "provisioners": [],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "apk update",
+        "apk add bash",
+        "rm -rf /var/cache/apk/*"
+      ]
+    }
+  ],
   "post-processors": [
     {
       "type": "vagrant",
