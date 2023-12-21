@@ -20,6 +20,7 @@
       "guest_additions_mode": "disable",
       "guest_os_type": "Linux26_64",
       "http_directory": "http",
+      "output_directory" : "{{user `shutdown_command`}}",
       "shutdown_command": "{{user `shutdown_command`}}",
       "boot_wait": "30s",
       "boot_command": [
@@ -50,27 +51,15 @@
       "ssh_username": "root",
       "disk_size": "{{user `disk_size`}}",
       "hard_drive_interface": "sata",
-      "vboxmanage": [
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--memory",
-          "{{user `memory`}}"
-        ],
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--cpus",
-          "{{user `cpus`}}"
-        ]
-      ]
+      "cpus":"{{user `cpus`}}",
+      "memory":"{{user `memory`}}"
     }
   ],
   "provisioners": [],
   "post-processors": [
     {
       "type": "vagrant",
-      "output": "{{user `out_dir`}}/{{user `name`}}-{{user `version`}}.box",
+      "output": "{{user `out_dir`}}/{{ .Name }}.box",
       "keep_input_artifact": true
     }
   ]
