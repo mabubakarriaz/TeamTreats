@@ -20,7 +20,7 @@
       "guest_additions_mode": "disable",
       "guest_os_type": "Linux26_64",
       "http_directory": "http",
-      "output_directory" : "{{user `shutdown_command`}}",
+      "output_directory" : "{{user `out_dir`}}",
       "shutdown_command": "{{user `shutdown_command`}}",
       "boot_wait": "30s",
       "boot_command": [
@@ -35,6 +35,8 @@
         "sda<enter><wait>",
         "<wait5><wait5><wait5>",
         "y<enter><wait>",
+        "<wait10><wait10><wait10>",
+        "<wait10><wait10><wait10>",
         "<wait10><wait10><wait10>",
         "<wait10><wait10><wait10>",
         "rc-service sshd stop<enter><wait>",
