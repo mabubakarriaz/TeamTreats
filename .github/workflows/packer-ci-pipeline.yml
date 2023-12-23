@@ -5,11 +5,11 @@ on:
     paths: 
       #- '.github/workflows/packer-ci-pipeline.yml'
       - 'configs/packer/**' # pre double asterisk means root dir. post double asterisk means sub-directories
-      - 'packer.json' # pre double asterisk means root dir. post double asterisk means sub-directories
+      - 'packer.json'
 
 jobs:
   validate:
-    name: check-packer-lint
+    name: validate-packer
     runs-on: ubuntu-22.04 # Debian distro Ubuntu 22.04.3 LTS
     defaults:
       run:
