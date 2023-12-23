@@ -24,21 +24,21 @@ Vagrant.configure("2") do |config|
     app.vm.synced_folder "src/teamtreats-webapp/bin/publish", "/var/www/app", create: true, group: "vagrant", owner: "vagrant", id: "app_mount_folder" # disabled: true # if you want live sync to be turned off
   
     # pre provision script
-    app.vm.provision "shell", path: "configs/pre.sh"
+    app.vm.provision "shell", path: "configs/vagrant/pre.sh"
 
     # desired state configuration using ansible local
     app.vm.provision "ansible_local" do |al|
-      al.playbook = "configs/playbook.yml"
+      al.playbook = "configs/vagrant/playbook.yml"
       al.become = true
       al.become_user = "root"
     end
 
     # add config files
     app.vm.provision "file", source: "configs/nginx.conf", destination: "/tmp/nginx.conf"
-    app.vm.provision "file", source: "configs/app.service", destination: "/tmp/app.service"
+    app.vm.provision "file", source: "configs/vagrant/app.service", destination: "/tmp/app.service"
     
     # post provision script
-    app.vm.provision "shell", path: "configs/post.sh"
+    app.vm.provision "shell", path: "configs/vagrant/post.sh"
 
   end 
 
