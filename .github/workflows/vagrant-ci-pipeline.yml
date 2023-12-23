@@ -21,6 +21,7 @@ jobs:
 
       #versions
       VAGRANT_VERSION: '2.4.0'
+      RUBY_VERSION: '2.7'
       
     steps:
       # download source code from the repo that resides in pushed branch only
@@ -32,7 +33,7 @@ jobs:
       - name: Set up Ruby and Vagrant
         uses: actions/setup-ruby@v1
         with:
-          ruby-version: '2.7.x'
+          ruby-version: ${{ env.RUBY_VERSION }}
 
       - name: Install Vagrant
         run: gem install vagrant
