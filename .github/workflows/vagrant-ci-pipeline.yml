@@ -36,7 +36,7 @@ jobs:
           ruby-version: ${{ env.RUBY_VERSION }}
 
       - name: Install Vagrant
-        run: gem install vagrant
+        run: apt install vagrant
           
       - name: Vagrant version used
         run: vagrant -v
