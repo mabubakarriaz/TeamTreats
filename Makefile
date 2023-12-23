@@ -2,7 +2,7 @@ packer:
 	packer build alpine.json
 
 box:
-	vagrant box add alpine-3.19.0 .packer/bin/alpine-3.19.0.box
+	vagrant box add alpine-3.19.0 .packer/bin/alpine/alpine-3.19.0.box
 
 vagrant:
 	vagrant up

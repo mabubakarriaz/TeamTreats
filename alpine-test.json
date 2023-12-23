@@ -83,6 +83,8 @@
     {
       "type": "vagrant",
       "output": "{{user `out_dir`}}/{{user `name`}}-{{user `version`}}.box",
+      "provider_override": "virtualbox",
+      "architecture": "amd64",
       "keep_input_artifact": true
     }
   ]
