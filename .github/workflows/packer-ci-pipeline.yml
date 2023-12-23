@@ -5,16 +5,11 @@ on:
     paths: 
       #- '.github/workflows/packer-ci-pipeline.yml'
       - 'configs/packer/**' # pre double asterisk means root dir. post double asterisk means sub-directories
-      - 'packer.json' # pre double asterisk means root dir. post double asterisk means sub-directories
-
-env:
-  TT_ARTIFACT_NAME: packer-lin-x64 
-  TT_VERSION: "v0.${{ github.run_number }}.${{ github.run_attempt }}"
-  TT_VERSION_SEMANTIC: "v0.${{ github.run_number }}.${{ github.run_attempt }}-${{ github.head_ref }}"
+      - 'packer.json'
 
 jobs:
   validate:
-    name: check-packer-lint
+    name: validate-packer
     runs-on: ubuntu-22.04 # Debian distro Ubuntu 22.04.3 LTS
     defaults:
       run:
@@ -25,8 +20,7 @@ jobs:
       TT_PACKER_PATH: 'packer.json'
 
       #versions
-      ANSIBLE_VERSION: '2.10.7+merged+base+2.10.8+dfsg-1'
-      ANSIBLE_LINT_VERSION: '6.14.2'
+      PACKER_VERSION: '1.10.0'
       
     steps:
       # download source code from the repo that resides in pushed branch only
@@ -40,8 +34,17 @@ jobs:
         with:
           version: latest
 
+      - name: Packer version used
+        run: packer -v
+                
       - name: Validate Packer syntax
         run: packer validate -syntax-only ${{ env.TT_PACKER_PATH }}
       
+      - name: Add Plugins
+        run: |
+          packer plugins install github.com/hashicorp/virtualbox
+          packer plugins install github.com/hashicorp/vagrant
+          packer plugins install github.com/hashicorp/ansible
+
       - name: Validate Packer file
         run: packer validate ${{ env.TT_PACKER_PATH }}
