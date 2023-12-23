@@ -36,7 +36,7 @@ jobs:
           ruby-version: ${{ env.RUBY_VERSION }}
 
       - name: Install Vagrant
-        run: apt install vagrant
+        run: sudo apt-get install vagrant
           
       - name: Vagrant version used
         run: vagrant -v
