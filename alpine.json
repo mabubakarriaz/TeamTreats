@@ -18,9 +18,12 @@
       "guest_additions_mode": "disable",
       "guest_os_type": "Linux26_64",
       "http_directory": "configs",
+      "http_port_min": 8500,
+      "http_port_max": 9000,
+      "http_bind_address": "0.0.0.0",
       "output_directory" : "{{user `out_dir`}}",
       "shutdown_command": "poweroff",
-      "boot_wait": "30s",
+      "boot_wait": "20s",
       "boot_command": [
         "root<enter><wait>",
         "ifconfig eth0 up && udhcpc -i eth0<enter><wait5>",
@@ -30,7 +33,9 @@
         "alpine<enter><wait>",
         "alpine<enter><wait>",
         "<wait5><wait5><wait5>",
+        "<wait5><wait5><wait5>",
         "y<enter><wait>",
+        "<wait10><wait10><wait10>",
         "<wait10><wait10><wait10>",
         "<wait10><wait10><wait10>",
         "<wait10><wait10><wait10>",
@@ -45,7 +50,6 @@
       "iso_checksum": "sha256:{{user `iso_checksum`}}",
       "iso_url": "{{user `iso_file`}}",
       "communicator": "ssh",
-      "ssh_private_key_file": "{{env `VAGRANT_HOME`}}/insecure_private_key",
       "ssh_username": "root",
       "ssh_password": "{{user `ssh_password`}}",
       "ssh_timeout": "{{user `ssh_wait_timeout`}}",
@@ -64,7 +68,9 @@
       "type": "shell",
       "inline": [
         "apk update",
+        "awk '/community/ {sub(/^#/, \"\", $0)} 1' /etc/apk/repositories > /tmp/tempfile && mv /tmp/tempfile /etc/apk/repositories",
         "apk add bash",
+        "apk add sudo",
         "rm -rf /var/cache/apk/*"
       ]
     }

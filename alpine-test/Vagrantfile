@@ -12,9 +12,8 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "alpine-test-3.19.0" #"alpine-3.19.0"
+  config.vm.box = "alpine-test-3.19.0"
 
-  # SSH settings
   config.ssh.shell = "/bin/bash"
   config.ssh.username = "root"
   config.ssh.password = "alpine"

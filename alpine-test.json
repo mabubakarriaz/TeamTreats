@@ -23,7 +23,7 @@
       "http_bind_address": "0.0.0.0",
       "output_directory" : "{{user `out_dir`}}",
       "shutdown_command": "poweroff",
-      "boot_wait": "30s",
+      "boot_wait": "20s",
       "boot_command": [
         "root<enter><wait>",
         "ifconfig eth0 up && udhcpc -i eth0<enter><wait5>",
@@ -33,7 +33,10 @@
         "alpine<enter><wait>",
         "alpine<enter><wait>",
         "<wait5><wait5><wait5>",
+        "<wait5><wait5><wait5>",
         "y<enter><wait>",
+        "<wait10><wait10><wait10>",
+        "<wait10><wait10><wait10>",
         "<wait10><wait10><wait10>",
         "<wait10><wait10><wait10>",
         "<wait10><wait10><wait10>",
@@ -66,7 +69,9 @@
       "type": "shell",
       "inline": [
         "apk update",
+        "awk '/community/ {sub(/^#/, \"\", $0)} 1' /etc/apk/repositories > /tmp/tempfile && mv /tmp/tempfile /etc/apk/repositories",
         "apk add bash",
+        "apk add sudo",
         "rm -rf /var/cache/apk/*"
       ]
     }

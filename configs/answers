@@ -2,7 +2,7 @@
 # If you don't want to use a certain option, then comment it out
 
 # Use US layout with US variant
-KEYMAPOPTS="none"
+KEYMAPOPTS=none
 
 # Set hostname to 'alpine'
 HOSTNAMEOPTS=alpine
