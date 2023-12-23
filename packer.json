@@ -21,7 +21,7 @@
       "http_port_min": 8500,
       "http_port_max": 9000,
       "http_bind_address": "0.0.0.0",
-      "output_directory" : "{{user `out_dir`}}",
+      "output_directory": "{{user `out_dir`}}",
       "shutdown_command": "poweroff",
       "boot_wait": "20s",
       "boot_command": [
@@ -56,11 +56,21 @@
       "ssh_timeout": "{{user `ssh_wait_timeout`}}",
       "disk_size": "{{user `disk_size`}}",
       "hard_drive_interface": "sata",
-      "cpus":"{{user `cpus`}}",
-      "memory":"{{user `memory`}}",
+      "cpus": "{{user `cpus`}}",
+      "memory": "{{user `memory`}}",
       "vboxmanage": [
-        ["modifyvm", "{{.Name}}", "--macaddress1", "aa33dd44bbdd"],
-        ["modifyvm", "{{.Name}}", "--nat-localhostreachable1", "on"]
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--macaddress1",
+          "aa33dd44bbdd"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--nat-localhostreachable1",
+          "on"
+        ]
       ]
     }
   ],
@@ -75,7 +85,7 @@
       ]
     },
     {
-      "type":"ansible-local",
+      "type": "ansible-local",
       "playbook_file": "configs/packer/playbook.yml"
     }
   ],
