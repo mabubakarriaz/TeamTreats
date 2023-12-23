@@ -1,16 +1,29 @@
 ---
-- name: Install and configure packages on Ubuntu 20.04
+- name: Install and configure packages on Alpine Linux
   hosts: all
+  become: true
 
   tasks:
+    - name: Install shell
+      apk:
+        name: bash
+        state: present
+        update_cache: yes
+
+    - name: Install super user do
+      apk:
+        name: sudo
+        state: present
+        update_cache: yes
+        
     - name: Install dotnet runtime
-      apt:
+      apk:
         name: aspnetcore-runtime-7.0
         state: present
         update_cache: yes
 
     - name: Install Nginx web server
-      apt:
+      apk:
         name: nginx
         state: present
         update_cache: yes

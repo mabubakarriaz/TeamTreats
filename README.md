@@ -191,6 +191,7 @@ https://developer.hashicorp.com/packer/integrations
 
 packer plugins install github.com/hashicorp/virtualbox
 packer plugins install github.com/hashicorp/vagrant
+packer plugins install github.com/hashicorp/ansible
 
 
 setup-alpine - answers

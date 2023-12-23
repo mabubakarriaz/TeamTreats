@@ -8,7 +8,7 @@
     "memory": "512",
     "iso_file": "https://nl.alpinelinux.org/alpine/v3.19/releases/x86_64/alpine-virt-3.19.0_rc4-x86_64.iso",
     "iso_checksum": "0af229fcc89c259cb4ba80cd31ddf278bd6795e68433848e1aad943312727f09",
-    "ssh_password": "alpine",
+    "ssh_password": "vagrant",
     "ssh_wait_timeout": "90s"
   },
   "builders": [
@@ -30,11 +30,12 @@
         "wget http://{{ .HTTPIP }}:{{ .HTTPPort }}/answers -O answers<enter><wait>",
         "setup-alpine -f answers<enter><wait>",
         "<wait5><wait5>",
-        "alpine<enter><wait>",
-        "alpine<enter><wait>",
+        "vagrant<enter><wait>",
+        "vagrant<enter><wait>",
         "<wait5><wait5><wait5>",
         "<wait5><wait5><wait5>",
         "y<enter><wait>",
+        "<wait10><wait10><wait10>",
         "<wait10><wait10><wait10>",
         "<wait10><wait10><wait10>",
         "<wait10><wait10><wait10>",

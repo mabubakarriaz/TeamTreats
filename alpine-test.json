@@ -70,10 +70,13 @@
       "inline": [
         "apk update",
         "awk '/community/ {sub(/^#/, \"\", $0)} 1' /etc/apk/repositories > /tmp/tempfile && mv /tmp/tempfile /etc/apk/repositories",
-        "apk add bash",
-        "apk add sudo",
+        "apk add ansible",
         "rm -rf /var/cache/apk/*"
       ]
+    },
+    {
+      "type":"ansible-local",
+      "playbook_file": "configs/playbook.yml"
     }
   ],
   "post-processors": [

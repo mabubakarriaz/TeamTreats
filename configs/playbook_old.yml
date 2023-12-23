@@ -1,0 +1,16 @@
+---
+- name: Install and configure packages on Ubuntu 20.04
+  hosts: all
+
+  tasks:
+    - name: Install dotnet runtime
+      apt:
+        name: aspnetcore-runtime-7.0
+        state: present
+        update_cache: yes
+
+    - name: Install Nginx web server
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
