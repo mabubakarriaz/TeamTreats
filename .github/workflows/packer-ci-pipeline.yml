@@ -7,11 +7,6 @@ on:
       - 'configs/packer/**' # pre double asterisk means root dir. post double asterisk means sub-directories
       - 'packer.json' # pre double asterisk means root dir. post double asterisk means sub-directories
 
-env:
-  TT_ARTIFACT_NAME: packer-lin-x64 
-  TT_VERSION: "v0.${{ github.run_number }}.${{ github.run_attempt }}"
-  TT_VERSION_SEMANTIC: "v0.${{ github.run_number }}.${{ github.run_attempt }}-${{ github.head_ref }}"
-
 jobs:
   validate:
     name: check-packer-lint
@@ -40,6 +35,9 @@ jobs:
         with:
           version: latest
 
+      - name: Packer version used
+        run: packer -v
+                
       - name: Validate Packer syntax
         run: packer validate -syntax-only ${{ env.TT_PACKER_PATH }}
       
