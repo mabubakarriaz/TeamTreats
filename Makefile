@@ -8,6 +8,6 @@ vagrant:
 	vagrant up
 
 clean:
-	#rm -rf output-virtualbox-iso
-	#rm -rf out
+	#rm -rf .vagrant
+	#rm -rf .packer
 	#vagrant destroy
