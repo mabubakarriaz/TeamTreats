@@ -1,0 +1,45 @@
+name: CI Vagrant Pipeline
+on:
+  pull_request:
+    types: [opened, reopened, edited, synchronize]
+    paths: 
+      #- '.github/workflows/packer-ci-pipeline.yml'
+      - 'configs/vagrant/**' # pre double asterisk means root dir. post double asterisk means sub-directories
+      - 'Vagrantfile'
+
+jobs:
+  validate:
+    name: validate-vagrant
+    runs-on: ubuntu-22.04 # Debian distro Ubuntu 22.04.3 LTS
+    defaults:
+      run:
+        shell: bash
+
+    env:
+      # project paths
+      TT_VAGRANT_PATH: 'Vagrantfile'
+
+      #versions
+      VAGRANT_VERSION: '2.4.0'
+      
+    steps:
+      # download source code from the repo that resides in pushed branch only
+      - name: Import source code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }} # the name of the branch that triggered the push 
+
+      - name: Set up Ruby and Vagrant
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '2.x'
+
+      - name: Install Vagrant
+        run: gem install vagrant
+          
+      - name: Vagrant version used
+        run: vagrant -v
+                
+      - name: Validate Vagrant file
+        run: packer validate -syntax-only ${{ env.TT_VAGRANT_PATH }}
+      
