@@ -20,8 +20,7 @@ jobs:
       TT_PACKER_PATH: 'packer.json'
 
       #versions
-      ANSIBLE_VERSION: '2.10.7+merged+base+2.10.8+dfsg-1'
-      ANSIBLE_LINT_VERSION: '6.14.2'
+      PACKER_VERSION: '1.10.0'
       
     steps:
       # download source code from the repo that resides in pushed branch only
@@ -41,5 +40,11 @@ jobs:
       - name: Validate Packer syntax
         run: packer validate -syntax-only ${{ env.TT_PACKER_PATH }}
       
+      - name: Add Plugins
+        run: |
+          packer plugins install github.com/hashicorp/virtualbox
+          packer plugins install github.com/hashicorp/vagrant
+          packer plugins install github.com/hashicorp/ansible
+
       - name: Validate Packer file
         run: packer validate ${{ env.TT_PACKER_PATH }}
