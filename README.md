@@ -181,3 +181,19 @@ Before diving into Vagrant, ensure the following dependencies are installed:
   ```powershell
   vagrant port
   ```
+
+## Running the app using Packer
+
+
+
+packer plugins
+https://developer.hashicorp.com/packer/integrations
+
+packer plugins install github.com/hashicorp/virtualbox
+packer plugins install github.com/hashicorp/vagrant
+packer plugins install github.com/hashicorp/ansible
+
+
+setup-alpine - answers
+https://docs.alpinelinux.org/user-handbook/0.1a/Installing/setup_alpine.html
+
