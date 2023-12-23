@@ -21,7 +21,7 @@ jobs:
 
       #versions
       VAGRANT_VERSION: '2.4.0'
-      RUBY_VERSION: '2.7'
+      RUBY_VERSION: '3.2'
       
     steps:
       # download source code from the repo that resides in pushed branch only
@@ -31,7 +31,7 @@ jobs:
           ref: ${{ github.ref }} # the name of the branch that triggered the push 
 
       - name: Set up Ruby and Vagrant
-        uses: actions/setup-ruby@v1
+        uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ env.RUBY_VERSION }}
 
@@ -42,5 +42,5 @@ jobs:
         run: vagrant -v
                 
       - name: Validate Vagrant file
-        run: packer validate -syntax-only ${{ env.TT_VAGRANT_PATH }}
+        run: vagrant validate ${{ env.TT_VAGRANT_PATH }}
       
