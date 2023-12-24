@@ -43,7 +43,7 @@
         "rc-service sshd stop<enter><wait>",
         "mount /dev/sda3 /mnt<enter><wait>",
         "echo 'PermitRootLogin yes' >> /mnt/etc/ssh/sshd_config<enter><wait>",
-        "echo 'UseDNS no' >> /etc/ssh/sshd_config<enter><wait>",
+        "echo 'UseDNS no' >> /mnt/etc/ssh/sshd_config<enter><wait>",
         "umount /mnt<enter><wait>",
         "reboot<enter>"
       ],
