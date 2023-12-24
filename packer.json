@@ -40,11 +40,10 @@
         "<wait10><wait10><wait10>",
         "<wait10><wait10><wait10>",
         "<wait10><wait10><wait10>",
-        "<wait10><wait10><wait10>",
         "rc-service sshd stop<enter><wait>",
         "mount /dev/sda3 /mnt<enter><wait>",
         "echo 'PermitRootLogin yes' >> /mnt/etc/ssh/sshd_config<enter><wait>",
-        "echo 'UseDNS no' >> /etc/ssh/sshd_config",
+        "echo 'UseDNS no' >> /etc/ssh/sshd_config<enter><wait>",
         "umount /mnt<enter><wait>",
         "reboot<enter>"
       ],
@@ -78,6 +77,7 @@
   "provisioners": [
     {
       "type": "shell",
+      "execute_command": "/bin/sh -x '{{.Path}}'",
       "script": "configs/packer/pre.sh"
     },
     {
@@ -87,10 +87,11 @@
     {
       "type": "file",
       "source": "configs/packer/motd",
-      "destination": "/tmp"
+      "destination": "/tmp/motd"
     },
     {
       "type": "shell",
+      "execute_command": "/bin/sh -x '{{.Path}}'",
       "script": "configs/packer/post.sh"
     }
   ],

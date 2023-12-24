@@ -1,6 +1,6 @@
-#!/bin/bash -ex
+#!/bin/sh
 
-echo "Running post.sh script"
+echo "Running post.sh script..."
 
 # Upgrade all installed packages to the latest version
 apk upgrade -U --available
@@ -10,7 +10,7 @@ source /etc/os-release
 
 # Disable root login and configure SSH to not use DNS
 #sed -i '/^PermitRootLogin yes/d' /etc/ssh/sshd_config
-echo "UseDNS no" >> /etc/ssh/sshd_config
+#echo "UseDNS no" >> /etc/ssh/sshd_config
 
 # setup vagrant user & authorized keys
 adduser -D vagrant
