@@ -1,0 +1,16 @@
+#!/sbin/openrc-run
+description="Team Treats webapp (TT)"
+pidfile="/var/run/teamtreats.pid"
+
+command="/usr/bin/dotnet"
+command_args="/var/www/app/teamtreats-webapp.dll"
+command_background="yes"
+command_user="vagrant"
+command_env="ASPNETCORE_ENVIRONMENT=Development"
+respawn="yes"
+respawn_delay="10"
+
+depend() {
+  need net
+  use logger dns
+}

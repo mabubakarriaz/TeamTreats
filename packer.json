@@ -1,0 +1,98 @@
+{
+  "variables": {
+    "name": "alpine",
+    "version": "3.19.0",
+    "out_dir": ".packer/bin/alpine",
+    "cpus": "1",
+    "disk_size": "2048",
+    "memory": "512",
+    "iso_file": "https://nl.alpinelinux.org/alpine/v3.19/releases/x86_64/alpine-virt-3.19.0_rc4-x86_64.iso",
+    "iso_checksum": "0af229fcc89c259cb4ba80cd31ddf278bd6795e68433848e1aad943312727f09",
+    "ssh_password": "alpine",
+    "ssh_wait_timeout": "90s"
+  },
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "vm_name": "{{ user `name`}}-{{user `version`}}",
+      "guest_additions_mode": "disable",
+      "guest_os_type": "Linux26_64",
+      "http_directory": "configs",
+      "http_port_min": 8500,
+      "http_port_max": 9000,
+      "http_bind_address": "0.0.0.0",
+      "output_directory": "{{user `out_dir`}}",
+      "shutdown_command": "poweroff",
+      "boot_wait": "20s",
+      "boot_command": [
+        "root<enter><wait>",
+        "ifconfig eth0 up && udhcpc -i eth0<enter><wait5>",
+        "wget http://{{ .HTTPIP }}:{{ .HTTPPort }}/packer/answers -O answers<enter><wait>",
+        "setup-alpine -f answers<enter><wait>",
+        "<wait5><wait5>",
+        "alpine<enter><wait>",
+        "alpine<enter><wait>",
+        "<wait5><wait5><wait5>",
+        "<wait5><wait5><wait5>",
+        "y<enter><wait>",
+        "<wait10><wait10><wait10>",
+        "<wait10><wait10><wait10>",
+        "<wait10><wait10><wait10>",
+        "<wait10><wait10><wait10>",
+        "<wait10><wait10><wait10>",
+        "rc-service sshd stop<enter><wait>",
+        "mount /dev/sda3 /mnt<enter><wait>",
+        "echo 'PermitRootLogin yes' >> /mnt/etc/ssh/sshd_config<enter><wait>",
+        "echo 'UseDNS no' >> /mnt/etc/ssh/sshd_config<enter><wait>",
+        "umount /mnt<enter><wait>",
+        "reboot<enter>"
+      ],
+      "headless": "false",
+      "iso_checksum": "sha256:{{user `iso_checksum`}}",
+      "iso_url": "{{user `iso_file`}}",
+      "communicator": "ssh",
+      "ssh_username": "root",
+      "ssh_password": "{{user `ssh_password`}}",
+      "ssh_timeout": "{{user `ssh_wait_timeout`}}",
+      "disk_size": "{{user `disk_size`}}",
+      "hard_drive_interface": "sata",
+      "cpus": "{{user `cpus`}}",
+      "memory": "{{user `memory`}}",
+      "vboxmanage": [
+        [ "modifyvm", "{{.Name}}", "--macaddress1", "aa33dd44bbdd" ],
+        [ "modifyvm", "{{.Name}}", "--nat-localhostreachable1", "on" ]
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "/bin/sh -x '{{.Path}}'",
+      "script": "configs/packer/pre.sh"
+    },
+    {
+      "type": "ansible-local",
+      "playbook_file": "configs/packer/playbook.yml"
+    },
+    {
+      "type": "file",
+      "source": "configs/packer/motd",
+      "destination": "/tmp/motd"
+    },
+    {
+      "type": "shell",
+      "execute_command": "/bin/sh -x '{{.Path}}'",
+      "script": "configs/packer/post.sh"
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "output": "{{user `out_dir`}}/{{user `name`}}-{{user `version`}}.box",
+      "provider_override": "virtualbox",
+      "architecture": "amd64",
+      "compression_level": "9",
+      "keep_input_artifact": true
+    }
+  ]
+}
