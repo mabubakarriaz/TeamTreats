@@ -59,18 +59,8 @@
       "cpus": "{{user `cpus`}}",
       "memory": "{{user `memory`}}",
       "vboxmanage": [
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--macaddress1",
-          "aa33dd44bbdd"
-        ],
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--nat-localhostreachable1",
-          "on"
-        ]
+        [ "modifyvm", "{{.Name}}", "--macaddress1", "aa33dd44bbdd" ],
+        [ "modifyvm", "{{.Name}}", "--nat-localhostreachable1", "on" ]
       ]
     }
   ],

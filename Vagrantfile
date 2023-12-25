@@ -3,7 +3,7 @@
 # https://docs.vagrantup.com.
 
 # Using environment variables or provide default values
-box_name = ENV['VAGRANT_BOX'] || "ubuntu/jammy64"
+box_name = ENV['VAGRANT_BOX'] || "alpine-3.19.0" # "ubuntu/jammy64"
 custom_port = ENV['VAGRANT_PORT'] || 8081
 
 Vagrant.configure("2") do |config|
@@ -27,14 +27,14 @@ Vagrant.configure("2") do |config|
     app.vm.provision "shell", path: "configs/vagrant/pre.sh"
 
     # desired state configuration using ansible local
-    app.vm.provision "ansible_local" do |al|
-      al.playbook = "configs/vagrant/playbook.yml"
-      al.become = true
-      al.become_user = "root"
-    end
+    # app.vm.provision "ansible_local" do |al|
+    #   al.playbook = "configs/vagrant/playbook.yml"
+    #   al.become = true
+    #   al.become_user = "root"
+    # end
 
     # add config files
-    app.vm.provision "file", source: "configs/nginx.conf", destination: "/tmp/nginx.conf"
+    app.vm.provision "file", source: "configs/vagrant/nginx.conf", destination: "/tmp/nginx.conf"
     app.vm.provision "file", source: "configs/vagrant/app.service", destination: "/tmp/app.service"
     
     # post provision script
