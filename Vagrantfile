@@ -3,7 +3,7 @@
 # https://docs.vagrantup.com.
 
 # Using environment variables or provide default values
-box_name = ENV['VAGRANT_BOX'] || "ubuntu/jammy64"
+box_name = ENV['VAGRANT_BOX'] || "alpine-3.19.0" # "ubuntu/jammy64"
 custom_port = ENV['VAGRANT_PORT'] || 8081
 
 Vagrant.configure("2") do |config|
@@ -16,7 +16,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "app", primary: true do |app|
 
     # network settings
-    app.vm.hostname = "comet.local" # entry added in /etc/hosts file with private IP
+    app.vm.hostname = "TT.local" # entry added in /etc/hosts file with private IP
     app.vm.network "private_network", ip: "192.168.200.10", hostname: true
     app.vm.network "forwarded_port", guest: 80, host: custom_port, host_ip: "127.0.0.1", protocol: "tcp", auto_correct: true, id: "app_port_rule"
     
@@ -24,21 +24,14 @@ Vagrant.configure("2") do |config|
     app.vm.synced_folder "src/teamtreats-webapp/bin/publish", "/var/www/app", create: true, group: "vagrant", owner: "vagrant", id: "app_mount_folder" # disabled: true # if you want live sync to be turned off
   
     # pre provision script
-    app.vm.provision "shell", path: "configs/pre.sh"
-
-    # desired state configuration using ansible local
-    app.vm.provision "ansible_local" do |al|
-      al.playbook = "configs/playbook.yml"
-      al.become = true
-      al.become_user = "root"
-    end
+    app.vm.provision "shell", path: "configs/vagrant/pre.sh"
 
     # add config files
-    app.vm.provision "file", source: "configs/nginx.conf", destination: "/tmp/nginx.conf"
-    app.vm.provision "file", source: "configs/app.service", destination: "/tmp/app.service"
+    app.vm.provision "file", source: "configs/vagrant/nginx.conf", destination: "/tmp/nginx.conf"
+    app.vm.provision "file", source: "configs/vagrant/teamtreats.openrc", destination: "/tmp/teamtreats"
     
     # post provision script
-    app.vm.provision "shell", path: "configs/post.sh"
+    app.vm.provision "shell", path: "configs/vagrant/post.sh"
 
   end 
 

@@ -29,17 +29,12 @@ jobs:
         with:
           ref: ${{ github.ref }} # the name of the branch that triggered the push 
 
-      - name: Set up Ruby and Vagrant
-        uses: actions/setup-ruby@v1
-        with:
-          ruby-version: '2.x'
-
       - name: Install Vagrant
-        run: gem install vagrant
+        run: sudo apt-get install vagrant
           
       - name: Vagrant version used
         run: vagrant -v
                 
       - name: Validate Vagrant file
-        run: packer validate -syntax-only ${{ env.TT_VAGRANT_PATH }}
+        run: vagrant validate ${{ env.TT_VAGRANT_PATH }}
       

@@ -3,8 +3,9 @@
   hosts: all
   become: true
 
+# Alpine packages are available at https://pkgs.alpinelinux.org/packages
   tasks:
-    - name: Install shell
+    - name: Install the GNU Bourne Again shell
       apk:
         name: bash
         state: present
@@ -15,7 +16,25 @@
         name: sudo
         state: present
         update_cache: yes
-        
+
+    - name: Install client url
+      apk:
+        name: curl
+        state: present
+        update_cache: yes        
+
+    - name: Install common CA certificates PEM files from Mozilla
+      apk:
+        name: ca-certificates
+        state: present
+        update_cache: yes   
+
+    - name: Install network utility to retrieve files from the Web
+      apk:
+        name: wget
+        state: present
+        update_cache: yes   
+
     - name: Install dotnet runtime
       apk:
         name: aspnetcore-runtime-7.0

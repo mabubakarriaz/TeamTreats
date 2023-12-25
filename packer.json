@@ -40,10 +40,10 @@
         "<wait10><wait10><wait10>",
         "<wait10><wait10><wait10>",
         "<wait10><wait10><wait10>",
-        "<wait10><wait10><wait10>",
         "rc-service sshd stop<enter><wait>",
         "mount /dev/sda3 /mnt<enter><wait>",
         "echo 'PermitRootLogin yes' >> /mnt/etc/ssh/sshd_config<enter><wait>",
+        "echo 'UseDNS no' >> /mnt/etc/ssh/sshd_config<enter><wait>",
         "umount /mnt<enter><wait>",
         "reboot<enter>"
       ],
@@ -59,34 +59,30 @@
       "cpus": "{{user `cpus`}}",
       "memory": "{{user `memory`}}",
       "vboxmanage": [
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--macaddress1",
-          "aa33dd44bbdd"
-        ],
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--nat-localhostreachable1",
-          "on"
-        ]
+        [ "modifyvm", "{{.Name}}", "--macaddress1", "aa33dd44bbdd" ],
+        [ "modifyvm", "{{.Name}}", "--nat-localhostreachable1", "on" ]
       ]
     }
   ],
   "provisioners": [
     {
       "type": "shell",
-      "inline": [
-        "apk update",
-        "awk '/community/ {sub(/^#/, \"\", $0)} 1' /etc/apk/repositories > /tmp/tempfile && mv /tmp/tempfile /etc/apk/repositories",
-        "apk add ansible",
-        "rm -rf /var/cache/apk/*"
-      ]
+      "execute_command": "/bin/sh -x '{{.Path}}'",
+      "script": "configs/packer/pre.sh"
     },
     {
       "type": "ansible-local",
       "playbook_file": "configs/packer/playbook.yml"
+    },
+    {
+      "type": "file",
+      "source": "configs/packer/motd",
+      "destination": "/tmp/motd"
+    },
+    {
+      "type": "shell",
+      "execute_command": "/bin/sh -x '{{.Path}}'",
+      "script": "configs/packer/post.sh"
     }
   ],
   "post-processors": [
