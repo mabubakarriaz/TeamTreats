@@ -35,7 +35,7 @@ Vagrant.configure("2") do |config|
 
     # add config files
     app.vm.provision "file", source: "configs/vagrant/nginx.conf", destination: "/tmp/nginx.conf"
-    app.vm.provision "file", source: "configs/vagrant/app.service", destination: "/tmp/app.service"
+    app.vm.provision "file", source: "configs/vagrant/teamtreats", destination: "/tmp/teamtreats"
     
     # post provision script
     app.vm.provision "shell", path: "configs/vagrant/post.sh"
