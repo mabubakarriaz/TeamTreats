@@ -1,6 +1,4 @@
 init:
-	vagrant destroy
-	vagrant box remove alpine-3.19.0
 	packer plugins install github.com/hashicorp/virtualbox
 	packer plugins install github.com/hashicorp/vagrant
 	packer plugins install github.com/hashicorp/ansible
@@ -15,6 +13,5 @@ vagrant:
 	vagrant up
 
 clean:
-	#rm -rf .vagrant
-	#rm -rf .packer
-	#vagrant destroy
+	vagrant destroy -f
+	vagrant box remove alpine-3.19.0
