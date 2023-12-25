@@ -26,16 +26,9 @@ Vagrant.configure("2") do |config|
     # pre provision script
     app.vm.provision "shell", path: "configs/vagrant/pre.sh"
 
-    # desired state configuration using ansible local
-    # app.vm.provision "ansible_local" do |al|
-    #   al.playbook = "configs/vagrant/playbook.yml"
-    #   al.become = true
-    #   al.become_user = "root"
-    # end
-
     # add config files
     app.vm.provision "file", source: "configs/vagrant/nginx.conf", destination: "/tmp/nginx.conf"
-    app.vm.provision "file", source: "configs/vagrant/teamtreats", destination: "/tmp/teamtreats"
+    app.vm.provision "file", source: "configs/vagrant/teamtreats.openrc", destination: "/tmp/teamtreats"
     
     # post provision script
     app.vm.provision "shell", path: "configs/vagrant/post.sh"
