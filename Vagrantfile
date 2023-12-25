@@ -16,7 +16,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "app", primary: true do |app|
 
     # network settings
-    app.vm.hostname = "comet.local" # entry added in /etc/hosts file with private IP
+    app.vm.hostname = "TT.local" # entry added in /etc/hosts file with private IP
     app.vm.network "private_network", ip: "192.168.200.10", hostname: true
     app.vm.network "forwarded_port", guest: 80, host: custom_port, host_ip: "127.0.0.1", protocol: "tcp", auto_correct: true, id: "app_port_rule"
     

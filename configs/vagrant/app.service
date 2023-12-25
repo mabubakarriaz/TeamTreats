@@ -1,5 +1,5 @@
 [Unit]
-Description=Team Treats webapp (comet)
+Description=Team Treats webapp (TT)
 
 [Service]
 WorkingDirectory=/var/www/app
