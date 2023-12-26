@@ -2,6 +2,7 @@ init:
 	packer plugins install github.com/hashicorp/virtualbox
 	packer plugins install github.com/hashicorp/vagrant
 	packer plugins install github.com/hashicorp/ansible
+	packer plugins installed
 
 packer:
 	packer build -force packer.json

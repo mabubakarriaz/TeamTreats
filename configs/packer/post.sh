@@ -32,3 +32,8 @@ echo "%wheel ALL=NOPASSWD:ALL" >> /etc/sudoers
 # moving files
 mv /tmp/motd /etc/motd
 
+# remove unnecessary packages
+apk del ansible
+
+# Remove the package cache to free up space
+rm -rf /var/cache/apk/
