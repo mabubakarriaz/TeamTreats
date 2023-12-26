@@ -8,9 +8,28 @@ A web app to maintain the team's recreational fund (TRF)
 
 ## Outline
 
-- Running the app with Docker Build
-- Running the app with Docker Compose
-- Running the App with Vagrant
+- [Team Treats](#team-treats)
+  - [Technologies](#technologies)
+  - [Outline](#outline)
+  - [Running the app with Docker Build](#running-the-app-with-docker-build)
+    - [Prerequisites](#prerequisites)
+    - [Steps](#steps)
+    - [Notes](#notes)
+  - [Running the app with Docker Compose](#running-the-app-with-docker-compose)
+    - [Prerequisites](#prerequisites-1)
+  - [Running Packer and Vagrant using Makefile](#running-packer-and-vagrant-using-makefile)
+    - [Prerequisites](#prerequisites-2)
+    - [Setup Process](#setup-process)
+    - [Additional Notes](#additional-notes)
+  - [Running the App with Packer](#running-the-app-with-packer)
+    - [Dependencies](#dependencies)
+    - [Setup Process](#setup-process-1)
+    - [Other useful commands](#other-useful-commands)
+  - [Running the App with Vagrant](#running-the-app-with-vagrant)
+    - [Dependencies](#dependencies-1)
+    - [Setup Process](#setup-process-2)
+    - [Additional Vagrant Commands](#additional-vagrant-commands)
+
 
 ## Running the app with Docker Build
 
@@ -104,6 +123,101 @@ To run the TeamTreats web app, follow these steps:
    docker-compose down
    ```
 
+## Running Packer and Vagrant using Makefile
+
+A Makefile is a powerful build automation tool that simplifies the execution of commands and tasks. This configuration provides documentation on utilizing a Makefile to streamline the process of running Packer and Vagrant for virtual machine provisioning. The Makefile included in this repository automates the installation of necessary plugins and the execution of Packer and Vagrant commands.
+
+### Prerequisites
+
+Ensure the following prerequisites are met:
+
+- Chocolatey: [Installation Guide](https://chocolatey.org/install)
+- Make: `choco install make`
+
+### Setup Process
+
+1. **Install Packer Plugins**:
+
+   To install Packer plugins, execute the following command:
+
+   ```bash
+   make init
+   ```
+
+2. **Build with Packer**:
+
+   To build the virtual machine image using Packer, run:
+
+   ```bash
+   make packer
+   ```
+
+3. **Build with Vagrant**:
+
+   To add a Vagrant box and launch the virtual machine, execute:
+
+   ```bash
+   make vagrant
+   ```
+
+4. **Clean Up**:
+
+   To destroy the virtual machine and remove the associated Vagrant box, run:
+
+   ```bash
+   make clean
+   ```
+
+**Note**: Ensure that Packer, Vagrant, and any other required dependencies are installed on your system before running the Makefile.
+
+### Additional Notes
+
+- The Makefile assumes that `packer.json` is present in the same directory.
+- Before running the `vagrant` rule, ensure that the Packer build is successful and has generated the box file.
+- Customize the Makefile and associated files according to your specific project requirements.
+
+## Running the App with Packer
+
+This Packer configuration is designed to automate the creation of a minimal Alpine Linux virtual machine. The resulting virtual machine can be used for various purposes, including development, testing, and production environments.
+
+### Dependencies
+
+Before running the Packer build, ensure that the required Packer plugins are installed. You can install them using the following commands:
+
+```powershell
+packer plugins install github.com/hashicorp/virtualbox
+packer plugins install github.com/hashicorp/vagrant
+packer plugins install github.com/hashicorp/ansible
+```
+
+For more information on Packer integrations, visit the [HashiCorp Packer Integrations](https://developer.hashicorp.com/packer/integrations) website.
+
+### Setup Process
+
+1. **Validate Packer file:**
+
+    Ensure the correctness of the Packer configuration file using the following commands. Remove the -syntax-only flag to validate the entire Packer file with plugin parameters.
+
+    ```packer validate -syntax-only packer.json```
+
+1. **Build With Packer**
+
+    Initiate the Packer build process using the following command. You can omit the -force flag for the first-time creation of an image using the packer.json file.
+
+    ```packer build -force packer.json```
+
+### Other useful commands
+
+- Get the list of installed plugins:
+
+    ```packer plugins installed```
+
+- Remove a specific plugin by replacing `<plugin>` with the actual plugin name:
+
+    ```packer plugins remove <plugin>```
+
+<a name="vagrant"></a>
+
 ## Running the App with Vagrant
 
 [Vagrant](https://www.vagrantup.com/) empowers developers to create and manage lightweight, reproducible, and portable development environments, courtesy of HashiCorp. The heart of Vagrant lies in the `Vagrantfile` located in the root directory of this repository. To set up and utilize Vagrant as a `development` and `testing` environment, follow the steps outlined below.
@@ -181,31 +295,3 @@ Before diving into Vagrant, ensure the following dependencies are installed:
   ```powershell
   vagrant port
   ```
-
-## Running the app using Packer
-
-
-
-packer plugins
-https://developer.hashicorp.com/packer/integrations
-
-packer plugins install github.com/hashicorp/virtualbox
-packer plugins install github.com/hashicorp/vagrant
-packer plugins install github.com/hashicorp/ansible
-
-
-setup-alpine - answers
-https://docs.alpinelinux.org/user-handbook/0.1a/Installing/setup_alpine.html
-
--- working ssh
-ssh vagrant@127.0.0.1 -p 2222 
-then accept the known host
-
-WARNING: UNPROTECTED PRIVATE KEY FILE! Permissions for '.\\private_key' are too open.
-then private key disable inheritance
-than  remove authentocated users
-then remove builtin users
-then add logged in user
-
-try ssh -i ./private_key vagrant@127.0.0.1 -p 2222 
-it will work IA
