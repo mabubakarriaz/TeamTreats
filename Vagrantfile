@@ -3,7 +3,7 @@
 # https://docs.vagrantup.com.
 
 # Using environment variables or provide default values
-box_name = ENV['VAGRANT_BOX'] || "alpine-3.19.0" # "ubuntu/jammy64"
+box_name = ENV['VAGRANT_BOX'] || "abubakarriaz/alpine-3.19.0" # "alpine-3.19.0" 
 custom_port = ENV['VAGRANT_PORT'] || 8081
 
 Vagrant.configure("2") do |config|

@@ -228,7 +228,7 @@ Before diving into Vagrant, ensure the following dependencies are installed:
 
 - [Oracle VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 - [Vagrant](https://developer.hashicorp.com/vagrant/install?product_intent=vagrant)
-- Ubuntu box: `vagrant box add ubuntu/jammy64`
+- Alpine box: `vagrant box add abubakarriaz/alpine-3.19.0`
 
 ### Setup Process
 
