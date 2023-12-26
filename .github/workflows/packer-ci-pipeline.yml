@@ -1,0 +1,50 @@
+name: CI Packer Pipeline
+on:
+  pull_request:
+    types: [opened, reopened, edited, synchronize]
+    paths: 
+      #- '.github/workflows/packer-ci-pipeline.yml'
+      - 'configs/packer/**' # pre double asterisk means root dir. post double asterisk means sub-directories
+      - 'packer.json'
+
+jobs:
+  validate:
+    name: validate-packer
+    runs-on: ubuntu-22.04 # Debian distro Ubuntu 22.04.3 LTS
+    defaults:
+      run:
+        shell: bash
+
+    env:
+      # project paths
+      TT_PACKER_PATH: 'packer.json'
+
+      #versions
+      PACKER_VERSION: '1.10.0'
+      
+    steps:
+      # download source code from the repo that resides in pushed branch only
+      - name: Import source code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }} # the name of the branch that triggered the push 
+
+      - name: Set up Packer
+        uses: hashicorp/setup-packer@main
+        with:
+          version: latest
+
+      - name: Packer version used
+        run: packer -v
+                
+      - name: Validate Packer syntax
+        run: packer validate -syntax-only ${{ env.TT_PACKER_PATH }}
+      
+      - name: Add Plugins
+        run: |
+          packer plugins install github.com/hashicorp/virtualbox
+          packer plugins install github.com/hashicorp/vagrant
+          packer plugins install github.com/hashicorp/ansible
+
+      - name: Validate Packer file
+        run: packer validate ${{ env.TT_PACKER_PATH }}

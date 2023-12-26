@@ -1,0 +1,9 @@
+version: '3.4'
+
+services:
+  teamtreats-webapp:
+    container_name: teamtreats-webapp
+    image: ${DOCKER_REGISTRY-}teamtreatswebapp
+    build:
+      context: .
+      dockerfile: teamtreats-webapp/Dockerfile
