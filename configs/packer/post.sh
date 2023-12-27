@@ -34,6 +34,7 @@ mv /tmp/motd /etc/motd
 
 # remove unnecessary packages
 apk del ansible
+apk update
 
 # Remove the package cache to free up space
 rm -rf /var/cache/apk/
