@@ -29,6 +29,7 @@ A web app to maintain the team's recreational fund (TRF)
     - [Dependencies](#dependencies-1)
     - [Setup Process](#setup-process-2)
     - [Additional Vagrant Commands](#additional-vagrant-commands)
+  - [Running the app using Packer](#running-the-app-using-packer)
 
 
 ## Running the app with Docker Build
@@ -295,3 +296,32 @@ Before diving into Vagrant, ensure the following dependencies are installed:
   ```powershell
   vagrant port
   ```
+
+## Running the app using Packer
+
+
+
+packer plugins
+https://developer.hashicorp.com/packer/integrations
+
+packer plugins install github.com/hashicorp/virtualbox
+packer plugins install github.com/hashicorp/vagrant
+packer plugins install github.com/hashicorp/ansible
+
+
+setup-alpine - answers
+https://docs.alpinelinux.org/user-handbook/0.1a/Installing/setup_alpine.html
+
+-- working ssh
+ssh vagrant@127.0.0.1 -p 2222 
+then accept the known host
+
+WARNING: UNPROTECTED PRIVATE KEY FILE! Permissions for '.\\private_key' are too open.
+then private key disable inheritance
+than  remove authentocated users
+then remove builtin users
+then add logged in user
+
+try ssh -i ./private_key vagrant@127.0.0.1 -p 2222 
+it will work IA
+>>>>>>>>> Temporary merge branch 2
