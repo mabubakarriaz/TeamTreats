@@ -54,7 +54,7 @@ resource "azurerm_subnet" "tf-snet-tt-01" {
 
 }
 
-resource "azurerm_subnet_network_security_group_association" "example" {
+resource "azurerm_subnet_network_security_group_association" "tf-nsga-tt-vnet01snet01-01" {
   subnet_id                 = azurerm_subnet.tf-snet-tt-01.id
   network_security_group_id = azurerm_network_security_group.tf-nsg-tt-01.id
 }
