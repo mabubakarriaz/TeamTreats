@@ -37,4 +37,4 @@ apk del ansible
 apk update
 
 # Remove the package cache to free up space
-rm -rf /var/cache/apk/
+rm -rf /var/cache/apk/*
