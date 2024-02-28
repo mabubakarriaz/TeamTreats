@@ -1,0 +1,5 @@
+name: 'Greeting Action'
+description: 'Outputs a greeting'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
