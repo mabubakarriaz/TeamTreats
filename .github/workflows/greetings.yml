@@ -6,7 +6,7 @@ on:
 
 jobs:
   greeting:
-    runs-on: [self-hosted, win, x64]
+    runs-on: [self-hosted, Windows, X64]
     permissions:
       issues: write
       pull-requests: write
