@@ -8,4 +8,4 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Run Greeting Action
-      uses: ./action-test32
+      uses: ${{ github.action_path }}/action-test32
