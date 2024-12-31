@@ -22,12 +22,11 @@ A web app to maintain the team's recreational fund (TRF)
     - [Setup Process](#setup-process)
     - [Additional Notes](#additional-notes)
   - [Running the App with Packer](#running-the-app-with-packer)
+    - [**Build With Packer**](#build-with-packer)
     - [Dependencies](#dependencies)
-    - [Setup Process](#setup-process-1)
-    - [Other useful commands](#other-useful-commands)
   - [Running the App with Vagrant](#running-the-app-with-vagrant)
     - [Dependencies](#dependencies-1)
-    - [Setup Process](#setup-process-2)
+    - [Setup Process](#setup-process-1)
     - [Additional Vagrant Commands](#additional-vagrant-commands)
 
 
@@ -180,6 +179,12 @@ Ensure the following prerequisites are met:
 
 This Packer configuration is designed to automate the creation of a minimal Alpine Linux virtual machine. The resulting virtual machine can be used for various purposes, including development, testing, and production environments.
 
+### **Build With Packer**
+
+    Initiate the Packer build process using the following command. You can omit the -force flag for the first-time creation of an image using the packer.json file.
+
+    ```packer build -force packer.json```
+
 ### Dependencies
 
 Before running the Packer build, ensure that the required Packer plugins are installed. You can install them using the following commands:
@@ -191,30 +196,6 @@ packer plugins install github.com/hashicorp/ansible
 ```
 
 For more information on Packer integrations, visit the [HashiCorp Packer Integrations](https://developer.hashicorp.com/packer/integrations) website.
-
-### Setup Process
-
-1. **Validate Packer file:**
-
-    Ensure the correctness of the Packer configuration file using the following commands. Remove the -syntax-only flag to validate the entire Packer file with plugin parameters.
-
-    ```packer validate -syntax-only packer.json```
-
-1. **Build With Packer**
-
-    Initiate the Packer build process using the following command. You can omit the -force flag for the first-time creation of an image using the packer.json file.
-
-    ```packer build -force packer.json```
-
-### Other useful commands
-
-- Get the list of installed plugins:
-
-    ```packer plugins installed```
-
-- Remove a specific plugin by replacing `<plugin>` with the actual plugin name:
-
-    ```packer plugins remove <plugin>```
 
 <a name="vagrant"></a>
 
