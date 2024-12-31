@@ -3,7 +3,6 @@
   hosts: all
   become: true
 
-# Alpine packages are available at https://pkgs.alpinelinux.org/packages
   tasks:
     - name: Install the GNU Bourne Again shell
       apk:
@@ -11,7 +10,7 @@
         state: present
         update_cache: yes
 
-    - name: Install super user do
+    - name: Install super user
       apk:
         name: sudo
         state: present
@@ -35,9 +34,10 @@
         state: present
         update_cache: yes   
 
+    # To find the exact packages names go to this link https://pkgs.alpinelinux.org/packages
     - name: Install dotnet runtime
       apk:
-        name: aspnetcore-runtime-7.0
+        name: aspnetcore8-runtime #aspnetcore-runtime-7.0
         state: present
         update_cache: yes
 

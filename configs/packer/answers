@@ -27,10 +27,10 @@ TIMEZONEOPTS="UTC"
 #
 # set http/ftp proxy
 #PROXYOPTS="http://webproxy:8080"
-PROXYOPTS=none
+PROXYOPTS="none"
 #
 # Add first mirror (CDN)
-APKREPOSOPTS="-1"
+APKREPOSOPTS="-f"
 #
 # Create admin user
 USEROPTS="-a -u -g audio,video,netdev juser"
@@ -38,13 +38,13 @@ USEROPTS="-a -u -g audio,video,netdev juser"
 #USERSSHKEY="https://example.com/juser.keys"
 #
 # Install Openssh
-SSHDOPTS=openssh
+SSHDOPTS="openssh"
 #ROOTSSHKEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOIiHcbg/7ytfLFHUNLRgEAubFz/13SwXBOM/05GNZe4 juser@example.com"
 #ROOTSSHKEY="https://example.com/juser.keys"
 #
 # Use openntpd
 #NTPOPTS="openntpd"
-NTPOPTS=none
+NTPOPTS="openntpd"
 #
 # Use /dev/sda as a sys disk
 DISKOPTS="-m sys /dev/sda"
