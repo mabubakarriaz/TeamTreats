@@ -5,10 +5,7 @@
 KEYMAPOPTS="none us us"
 #
 # Set hostname to 'alpine'
-HOSTNAMEOPTS="alpine.org"
-#
-# Set device manager to mdev
-DEVDOPTS="mdev"
+HOSTNAMEOPTS="alpine"
 #
 # Contents of /etc/network/interfaces
 INTERFACESOPTS="auto lo
@@ -16,11 +13,7 @@ iface lo inet loopback
 
 auto eth0
 iface eth0 inet dhcp
-hostname alpine-test
-"
-#
-# Search domain of example.com, Google public nameserver
-# DNSOPTS="-d example.com 8.8.8.8"
+hostname alpine-test"
 #
 # Set timezone to UTC
 TIMEZONEOPTS="UTC"
@@ -28,12 +21,15 @@ TIMEZONEOPTS="UTC"
 # set http/ftp proxy
 #PROXYOPTS="http://webproxy:8080"
 PROXYOPTS=none
-#
+# Use openntpd
+#NTPOPTS="openntpd"
+NTPOPTS="busybox"
 # Add first mirror (CDN)
-APKREPOSOPTS="-1"
+APKREPOSOPTS="1"
+#
 #
 # Create admin user
-USEROPTS="-a -u -g audio,video,netdev juser"
+USEROPTS="no"
 #USERSSHKEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOIiHcbg/7ytfLFHUNLRgEAubFz/13SwXBOM/05GNZe4 juser@example.com"
 #USERSSHKEY="https://example.com/juser.keys"
 #
@@ -42,17 +38,9 @@ SSHDOPTS=openssh
 #ROOTSSHKEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOIiHcbg/7ytfLFHUNLRgEAubFz/13SwXBOM/05GNZe4 juser@example.com"
 #ROOTSSHKEY="https://example.com/juser.keys"
 #
-# Use openntpd
-#NTPOPTS="openntpd"
-NTPOPTS=none
+# Search domain of example.com, Google public nameserver
+# DNSOPTS="-d example.com 8.8.8.8"
 #
 # Use /dev/sda as a sys disk
-DISKOPTS="-m sys /dev/sda"
-#
-# Setup storage with label APKOVL for config storage
-#LBUOPTS="LABEL=APKOVL"
-LBUOPTS=none
-#
-#APKCACHEOPTS="/media/LABEL=APKOVL/cache"
-APKCACHEOPTS=none
+DISKOPTS="sda sys n"
 #
