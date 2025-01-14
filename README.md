@@ -181,9 +181,9 @@ This Packer configuration is designed to automate the creation of a minimal Alpi
 
 ### **Build With Packer**
 
-    Initiate the Packer build process using the following command. You can omit the -force flag for the first-time creation of an image using the packer.json file.
+Initiate the Packer build process using the following command. You can omit the -force flag for the first-time creation of an image using the packer.json file.
 
-    ```packer build -force packer.json```
+```packer build -force alpine.pkr.hcl```
 
 ### Dependencies
 
